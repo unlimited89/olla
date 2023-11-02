@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Volumen de Olla</title>
+    <script src="index.js"></script>
+</head>
+
+<body>
+    <h1>Calculadora de Volumen de para el evento de casa de campo</h1>
+
+    <label for="diametroOlla">Diametro de la Olla (cm):</label>
+    <input type="number" id="diametroOlla"><br>
+
+    <label for="alturaOlla">Altura de la Olla (cm):</label>
+    <input type="number" id="alturaOlla"><br>
+
+    <label for="diametroPlato">Diametro del Plato (cm):</label>
+    <input type="number" id="diametroPlato"><br>
+
+    <label for="invitados">Número de Invitados:</label>
+    <input type="number" id="invitados"><br>
+
+    <label for="aguaDisponible">Litros de Agua Disponibles:</label>
+    <input type="number" id="aguaDisponible"><br>
+
+    <button onclick="calcular()">Calcular</button>
+
+    <h2>Resultados:</h2>
+    <p id="resultadoOlla"></p>
+    <p id="resultadoPlato"></p>
+    <p id="cantidadSopas"></p>
+
+    <script>
+        function calcular() {
+            var diametroOlla = parseFloat(document.getElementById("diametroOlla").value);
+            var alturaOlla = parseFloat(document.getElementById("alturaOlla").value);
+            var diametroPlato = parseFloat(document.getElementById("diametroPlato").value);
+            var invitados = parseInt(document.getElementById("invitados").value);
+            var aguaDisponible = parseFloat(document.getElementById("aguaDisponible").value);
+
+            var radioOlla = diametroOlla / 2;
+            var radioPlato = diametroPlato / 2;
+
+            var volumenOlla = Math.PI * Math.pow(radioOlla, 2) * alturaOlla;
+            var volumenPlato = (2 * Math.PI * Math.pow(radioPlato, 3)) / 3;
+            var sopasPorOlla = volumenOlla / volumenPlato;
+            var totalAgua = volumenPlato * invitados;
+            var ollasNecesarias = totalAgua / volumenOlla;
+
+            document.getElementById("resultadoOlla").textContent = "Volumen de la Olla: " + volumenOlla.toFixed(2) + " cm³";
+            document.getElementById("resultadoPlato").textContent = "Volumen por Plato: " + volumenPlato.toFixed(2) + " cm³";
+            document.getElementById("cantidadSopas").textContent = "Por cada olla salen: " + sopasPorOlla.toFixed(2) + " platos de sopa";
+
+            if (aguaDisponible >= totalAgua) {
+                document.getElementById("cantidadSopas").textContent += "<br>El agua es suficiente para hacer todas las sopas.";
+            } else {
+                var invitadosPosibles = Math.floor(aguaDisponible / volumenPlato);
+                document.getElementById("cantidadSopas").textContent += "<br>El agua solo alcanza para: " + invitadosPosibles + " invitados.";
+            }
+        }
+    </script>
+</body>
+
+</html>
